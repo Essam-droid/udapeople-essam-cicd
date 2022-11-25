@@ -18,7 +18,7 @@ commands:
             # Delete frontend stack
             aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
 
-            # Delete backend stack
+            # Delete backend stack 
             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
 
 
