@@ -393,19 +393,18 @@ jobs:
             unzip -qq awscliv2.zip
             sudo ./aws/install
       - run:
-          name: Get old stack workflow id
-          command: |
-            # your code here
-            export OldWorkflowID=$(curl --insecure https://kvdb.io/BmuZBbYQ5c3WFxUPbbSiWJ/old_workflow_id)
-            aws s3 ls
-            echo old workflow ID: $OldWorkflowID
-            echo "s3://udapeople-${OldWorkflowID}"
-      - run:
-          name: Remove old stacks and files
+          name: Get old stack workflow id & Remove old stacks and files
           command: |
             export STACKS=$(aws cloudformation list-stacks \
             --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)
+
+                                    
+            export OldWorkflowID=$(curl --insecure https://kvdb.io/BmuZBbYQ5c3WFxUPbbSiWJ/old_workflow_id)
+            aws s3 ls
+            echo old workflow ID: $OldWorkflowID
+            echo "s3://udapeople-${OldWorkflowID}"
+            
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
               echo "----------cleaning up stacks------------"
