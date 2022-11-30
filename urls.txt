@@ -1,0 +1,2 @@
+[URL01] https://github.com/Essam-droid/udapeople-essam-cicd
+[URL02] https://udapeople-2092704.s3.us-west-2.amazonaws.com/index.html
