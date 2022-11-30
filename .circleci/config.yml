@@ -319,13 +319,16 @@ jobs:
 
   smoke-test:
     docker:
-      - image: python:3.7-alpine3.16
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache curl aws-cli nodejs npm
+            sudo apt install -y tar gzip curl
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip -qq awscliv2.zip
+            sudo ./aws/install
 
       - run:
           name: Backend smoke test
@@ -343,7 +346,7 @@ jobs:
           command: |
             export URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-${AWS_DEFAULT_REGION}.amazonaws.com/#/employees"            
             echo $URL
-            if curl ${URL} | grep "Welcome"; then return 0; else return 1; fi
+            if curl ${URL} | grep "Welcome"; then return 1; else return 1; fi
       - destroy-environment
       - revert-migrations
 
